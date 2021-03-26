@@ -133,7 +133,16 @@ select aircraft_name from aircrafts where aircraft_name like 'Boeing%';
 # EXERCISE 9: In the Airline database write the SQL script to find all flights with a distance between 300 and 2000 miles
 select flight_number, flight_mileage from fligths where flight_mileage between 300 and 2000;
 
+# EXERCISE 10: In the Airline database write the SQL script to find the average flight distance booked grouped by customer status (this should require a join)
+SELECT customer_status,AVG(flight_mileage) FROM flights_per_customer INNER JOIN customers ON flights_per_customer.customer_name=customers.customer_name INNER JOIN
+flights ON flights_per_customer.flight_number=flights.flight_number GROUP BY customer_status;
 
+# EXERCISE 11: In the Airline database write the SQL script to find the most aircraft most often booked by gold status members (this should require a join)
+SELECT aircraft,MAX(total) FROM
+(SELECT aircraft,COUNT(aircraft) total FROM flights_per_customer INNER JOIN customers
+ON flights_per_customer.customer_name=customers.customer_name INNER JOIN flights ON flights_per_customer.flight_number=flights.flight_number
+WHERE customer_status='Gold' GROUP BY aircraft
+) subqueryaircrafts;
 
 
 
